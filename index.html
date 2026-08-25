@@ -4,130 +4,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Portofolio Tailwind</title>
-    <link href="dist/output.css" rel="stylesheet" />
+    <title>Ada Cerita Street Coffee</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<!-- Hero section -->
-<section id="home" class="pt-35 mt-4">
-    <div class="container">
-        <div class="flex flex-wrap">
-            <div class="w-full self-center px-4 lg:w-1/2">
-                <h1 class="text-base font-semibold text-primary md:text-xl"><span
-                        class="block font-bold text-dark text-3xl mt-1 lg:text-3xl">Welcome To</span></h1>
-                <h2 class="font-bold text-gray-700 text-lg mb-5 lg:text-2xl">Ada Cerita Coffee<span class="text-dark">
-                    </span></h2>
+<body x-data="produk">
+    <!-- Navbar start -->
+    <nav class="navbar" x-data>
+        <a href="#" class="navbar-logo">Ada <span>Cerita</span>.</a>
+        <div class="navbar-nav">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#produk">Menu</a>
+            <a href="#kontak">Kontak</a>
+        </div>
+        <div class="navbar-extra active">
+            <a href="#" id="search-button"><i data-feather="search"></i></a>
+            <!-- Form Pencarian -->
+            <div class="search-form" x-data>
+                <input type="search" id="search-box" placeholder="Cari kopi favoritmu..." x-model="$store.products.searchQuery">
+                <label for="search-box"><i data-feather="search"></i></label>
             </div>
-            <div class="w-full self-end px-4 lg:w-1/2">
-                <div class="relative mt-8 lg:mt-9 lg:right-0 flex items-center justify-center">
-                    <!-- Efek gradasi abu-abu di luar lingkaran -->
-                    <div
-                        class="relative w-[100px] h-[100px] rounded-full bg-gradient-to-tr from-gray-500 via-gray-600 to-gray-500 p-[2px] shadow-lg">
-                        <!-- Gambar lingkaran -->
-                        <img src="img/profile1.jpeg" alt="Whagea Saputra"
-                            class="w-full h-full object-cover rounded-full" />
+            <a href="#" id="shopping-cart-button">
+                <i data-feather="shopping-cart"></i>
+                <span class="quantity-badge" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span>
+            </a>
+            <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+        </div>
+
+        <!-- Search start -->
+        <div class="search-form">
+            <input type="search" id="search-box" placeholder="search here...">
+            <label for="search-box"><i data-feather="search"></i></label>
+        </div>
+        <!-- Search end -->
+
+        <!-- Shopping card start -->
+        <div class="shopping-cart" x-data="produk">
+            <template x-for="(item, index) in $store.cart.items" x-keys="index">
+                <div class="cart-item">
+                    <img :src="`img/produk/${item.img}`" :alt="item.name">
+                    <div class="item-detail">
+                        <h3 x-text="item.name"></h3>
+                        <div class="item-price">
+                            <span x-text="rupiah(item.price)"></span> &times;
+                            <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+                            <span x-text="item.quantity"></span>
+                            <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+                            <span x-text="rupiah(item.total)"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </template>
+            <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem;">Cart is Empty</h4>
+            <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
 
+            <div class="form-container" x-show="$store.cart.items.length">
+                <form action="" id="checkoutFrom">
+                    <h5>Customer detail</h5>
+                    <label for="name">
+                        <span>Name</span>
+                        <input type="text" name="name" id="name">
+                    </label>
+                    <label for="email">
+                        <span>Email</span>
+                        <input type="email" name="email" id="email">
+                    </label>
+                    <label for="phone">
+                        <span>Phone</span>
+                        <input type="number" name="phone" id="phone" autocomplete="off">
+                    </label>
+
+                    <button class="checkout-button" type="button" id="checkout-button" value="Checkout">Checkout
+                    </button>
+                    <!-- <button class="checkout-button2" type="button" id="checkout-button2" value="Cencel">Cancel
+                    </button> -->
+                </form>
+            </div>
+        </div>
+        <!-- Shopping card end -->
+    </nav>
+    <!-- Navbar end -->
+    <!-- Hero section start -->
+    <!-- <section class="hero" id="home">
+        <main class="content">
+            <h1>Mari Menikmati Secangkir <span>Kopi</span></h1>
+            <p>Terima kasih telah memilih Coffietime sebagai tempat Anda untuk menikmati kopi dan bersantai.</p>
+            <a href="#" class="cta">Beli Sekarang</a>
+        </main>
+    </section> -->
+    <!-- Hero Section Slideshow -->
+    <section class="hero" x-data="{ 
+    activeSlide: 0, 
+    slides: ['bg_999.jpg', 'profile02.jpeg', 'bg_4455.jpg'],
+    init() {
+            setInterval(() => {
+                this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+            }, 5000);
+        }
+    }">
+    <template x-for="(slide, index) in slides" :key="index">
+        <!-- Gunakan x-show dan transition agar pergantian mulus -->
+        <div 
+            class="hero-slide" 
+            x-show="activeSlide === index"
+            x-transition:enter="transition ease-out duration-1000"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-1000"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            :style="`background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/menu/${slide}');`"
+        >
+            <div class="content">
+                <h1>Nikmati Kopi <span>Ada Cerita</span></h1>
+                <p>Setiap cangkir memiliki cerita uniknya sendiri.</p>
+                <a href="#menu" class="cta">Beli Sekarang</a>
+            </div>
+        </div>
+    </template>
+</section>
+    <!-- Hero section end -->
+
+    <!-- About Start -->
+    <section id="about" class="about">
+        <h2><span>Tentang</span> Kami </h2>
+
+        <div class="row">
+            <div class="about-img">
+                <img src="img/menu/profile02.jpeg" alt="Tentang Kami">
+            </div>
+            <div class="content">
+                <h3>Kenapa Memilih Kami</h3>
+                <p>Kami dengan bangga mempersembahkan kepada Anda pengalaman kopi yang tak tertandingi di Ada Cerita Street Coffee.
+                    Kami adalah sebuah kedai kopi yang didedikasikan untuk menghadirkan kualitas terbaik dalam
+                    setiap cangkir kopi yang kami sajikan. Ada Cerita bukan sekadar tempat biasa untuk menikmati
+                    kopi, tetapi juga merupakan tempat untuk bersantai, berkoneksi, dan mengejar kebahagiaan melalui
+                    cita rasa kopi yang memikat.</p><br>
+                <p>Kami mengerti kesibukan dalam kehidupan sehari-hari, dan kami ingin memudahkan Anda. Sekarang, Anda
+                    dapat memesan kopi favorit Anda secara online melalui situs web kami. Kami akan dengan senang hati
+                    menyediakan kopi kesukaan Anda untuk diambil atau diantarkan sesuai keinginan Anda. Tidak perlu
+                    antri lagi, nikmati kopi berkualitas di mana pun Anda berada.</p>
+            </div>
+        </div>
+    </section>
+    <!-- About end -->
+
+    <!-- Product Start -->
+    <section class="produk" id="produk" x-data="produk" x-init="kategori = 'coffee'">
+        <h2><span>Menu </span> Kami </h2>
+            <p> Di Coffee time, kami menawarkan beragam pilihan kopi, dari yang ringan dan fruity hingga yang bold dan kuat.
+            Kami juga memiliki berbagai pilihan teh, cokelat panas, dan makanan penutup lezat yang cocok untuk menemani
+            minuman Anda</p>
+            <br>
+        <div class="menu-center">
+            <a class="btn btn-outline filter-btn" 
+            :class="kategori === 'coffee' ? 'btn-active' : 'btn-secondary'"
+            @click.prevent="kategori='coffee'">Milk Coffee</a>
+
+            <a class="btn btn-outline filter-btn" 
+            :class="kategori === 'noncoffee' ? 'btn-active' : 'btn-primary'"
+            @click.prevent="kategori='noncoffee'">Non Coffee</a>
+
+            <a class="btn btn-outline filter-btn" 
+            :class="kategori === 'mocktail' ? 'btn-active' : 'btn-secondary'"
+            @click.prevent="kategori='mocktail'">Mocktail</a>
+            
+            <a class="btn btn-outline filter-btn" 
+            :class="kategori === 'milk' ? 'btn-active' : 'btn-secondary'"
+            @click.prevent="kategori='milk'">Milk Series</a>
+
+            <a class="btn btn-outline filter-btn" 
+            :class="kategori === 'lunch' ? 'btn-active' : 'btn-primary'"
+            @click.prevent="kategori='lunch'">Lunch</a>
+        </div>
+        <div class="row">      
+            <template x-for="(item, index) in filteredItems" :key="index">
+                <div class="produk-card">
+                    <div class="produk-icons">
+                        <a href="#" @click.prevent="$store.cart.add(item)">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <use href="img/feather-sprite.svg#shopping-cart" />
+                            </svg>
+                        </a>
+                        <a href="#" @click.prevent="itemDetail = item; document.querySelector('#item-detail-modal').style.display='flex'">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <use href="img/feather-sprite.svg#eye" />
+                            </svg>
+                        </a>
+                        <!-- <a href="#" @click.prevent="itemDetail = item">
+                            <i data-feather="eye"></i>
+                        </a> -->
+                    </div>
+                    <div class="produk-image">
+                        <img :src="`img/produk/${item.img}`" :alt="item.name">
+                    </div>
+                    <div class="produk-content">
+                        <h3 x-text="item.name"></h3>
+                        <div class="produk-stars">
+                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <use href="img/feather-sprite.svg#star" />
+                            </svg>
+                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <use href="img/feather-sprite.svg#star" />
+                            </svg>
+                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <use href="img/feather-sprite.svg#star" />
+                            </svg>
+                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <use href="img/feather-sprite.svg#star" />
+                            </svg>
+                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <use href="img/feather-sprite.svg#star" />
+                            </svg>
+                        </div>
+                        <div class="produk-price" x-text="rupiah(item.price)"></div>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div class="modal" id="item-detail-modal" x-show="itemDetail !== null" x-cloak>
+            <div class="modal-container" @click.away="itemDetail !== null">
+                <!-- <pre x-text="JSON.stringify(itemDetail, null, 2)"></pre> -->
+                    <a href="#" class="close-icon" @click.prevent="itemDetail = null; document.getElementById('item-detail-modal').style.display='none'">
+                        <i data-feather="x"></i>
+                    </a>
+                    <template x-if="itemDetail">
+                        <div class="modal-content">
+                            <img :src="`img/produk/${itemDetail.img}`" :alt="itemDetail.name">
+                            <div class="produk-content">
+                                <h3 x-text="itemDetail.name"></h3>
+                                <p x-text="itemDetail.deskripsi"></p>
+                                
+                                <a href="#" @click.prevent="$store.cart.add(itemDetail)" class="buy-btn" center>
+                                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <use href="img/feather-sprite.svg#shopping-cart"/>
+                                    </svg>
+                                    <b><div class="produk-price" x-text="rupiah(itemDetail.price)"></div></b>
+                                </a>
+                            </div>
+                        </div>
+                    </template>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+            <h2><span>Konten</span> Kami</h2>
+            <p>Berikut ialah momen-monem yang kami ambil untuk dijadikan konten official Adacarita street coffe yang bisa anda lihat dari channel TikTok kami.</p>
+        <div class="row">
+            <div class="video-box">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@ohenparfume/video/7631193147497794837?_r=1&_t=ZS-95p7GgdrEO2" data-video-id="7631193147497794837" ><a target="_blank" title="@ohenparfume" href="https://www.tiktok.com/@ohenparfume/video/7631193147497794837?_r=1&_t=ZS-95p7GgdrEO2">@ohenparfume</a></blockquote>
+                    </div>
+                    <div class="video-box">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@ohenparfume/video/7631204410424675605?_r=1&_t=ZS-95pNw1mh0dO" data-video-id="7631204410424675605"><a target="_blank" title="@ohenparfume" href="https://www.tiktok.com/@ohenparfume/video/7631204410424675605?_r=1&_t=ZS-95pNw1mh0dO">@ohenparfume</a></blockquote>
+                    </div> 
+                    <div class="video-box">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@ohenparfume/video/7568105094621777173?_r=1&_t=ZS-95pNZKkUGnv" data-video-id="7568105094621777173"><a target="_blank" title="@ohenparfume" href="https://www.tiktok.com/@ohenparfume/video/7568105094621777173?_r=1&_t=ZS-95pNZKkUGnv">@ohenparfume</a></blockquote>
+                    </div>
+        </div>
+
+        </div>
+    </section>
+    <!-- Product End -->
+
+    <!-- Kontak Start -->
+    <section id="kontak" class="kontak">
+        <h2><span> Kontak </span>Kami</h2>
+        <P>Jangan ragu untuk menghubungi kami jika Anda memiliki pertanyaan lebih lanjut atau ingin berbagi cerita
+            tentang pengalaman Anda di Ada Cerita Street Coffee. Terima kasih kembali atas kunjungan Anda, dan sampai jumpa
+            segera!</P>
+
+        <div class="row">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.781342755085!2d109.96948937399584!3d-1.8309339364618924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e05191f60a56859%3A0x76a74504e1d207d9!2sKedai%20Lalu%20Limpat!5e0!3m2!1sen!2sid!4v1699357463898!5m2!1sen!2sid"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
+            <form action="">
+                <div class="input-group">
+                    <i data-feather="user"></i>
+                    <input type="text" placeholder="nama">
+                </div>
+                <div class="input-group">
+                    <i data-feather="mail"></i>
+                    <input type="text" placeholder="email">
+                </div>
+                <div class="input-group">
+                    <i data-feather="phone"></i>
+                    <input type="text" placeholder="nohp">
+                </div>
+                <button type="submit" class="btn">Kirim Pesan</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Kontak End -->
+
+    <!-- Footer Start -->
+    <footer>
+        <div class="socials">
+            <a href=""><i data-feather="instagram"></i></a>
+            <a href=""><i data-feather="twitter"></i></a>
+            <a href=""><i data-feather="facebook"></i></a>
+        </div>
+
+        <div class="links">
+            <a href="#home">Home</a>
+            <a href="#about">Tentang Kami</a>
+            <a href="#menu">Menu</a>
+            <a href="#kontak">Kontak</a>
+        </div>
+
+        <div class="credit">
+            <p>Created by <a href="">WhageaSaputra</a>. | &copy; 2023</p>
+        </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Modal detail start -->
+    <div class="modal" id="item-detail-modal" x-show="itemDetail !== null" x-data="produk" style="display: none;">
+        <div class="modal-container">
+            <a href="#" class="close-icon" @click.prevent="itemDetail = null; document.getElementById('item-detail-modal').style.display='none'">
+                <i data-feather="x"></i>
+            </a>
+
+            <template x-if="itemDetail">
+                <div class="modal-content">
+                    ... (isi konten Anda)
+                </div>
+            </template>
         </div>
     </div>
-</section>
-<!-- Hero section end -->
 
-<!-- style start -->
+        <!-- Javascript-->
+        <script src="js/script.js"></script>
 
-<!-- style end -->
+        <!-- Baru app.js -->
+        <script src="src/app.js"></script>
+        
+        <!-- Alpine dulu -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script async src="https://www.tiktok.com/embed.js"></script>
+        
 
-<!-- Achivment Start -->
-<section id="style" class="pt-35 mt-10">
-    <div class="container">
-        <div class="flex items-center justify-between">
-            <div class="text-2xl font-bold text-dark">
-                Tentang Kami
-            </div>
-            <div class="mx-7 flex-1 border-t border-neutral-950"></div>
-        </div>
-        <div class="mt-7 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div>
-                <div class="aspect-video w-full rounded-lg border border-neutral-700 p-1.5">
-                    <img src="img/menu.jpeg" alt="" srcset="">
-                </div>
-                <div class="text-1xl font-semibold text-gray-500 mt-5">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Achivment end -->
-
-<!-- Personal Project start-->
-<!-- <section id="style" class="pt-35 mt-10">
-    <div class="container">
-        <div class="flex items-center justify-between">
-            <div class="text-2xl font-bold text-dark">
-                Personal Project
-            </div>
-            <div class="mx-7 flex-1 border-t border-neutral-700"></div>
-        </div>
-        <div class="mt-7 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div>
-                <div class="aspect-video w-full rounded-lg border border-neutral-700 p-1.5">
-                    <img src="img/sipakpol.png" alt="" srcset="">
-                </div>
-                <div class="mt-4 text-1xl font-bold text-gray-500">Sipakpol App</div>
-                <div class="mt-2 flex flex-wrap gap-2.5">
-                    <div class="px-2 py-1 text-xs" style="color: white; background-color: #f13b2f;">laravel</div>
-                </div>
-                <div class="text-1xl font-semibold text-gray-500 mt-2">
-                    an application for proposing promotions for employees and lecturers at Politenik Negeri
-                    Ketapang.
-                </div>
-            </div>
-            <div>
-                <div class="aspect-video w-full rounded-lg border border-neutral-700 p-1.5">
-                    <img src="img/coffetime.png" alt="" srcset="">
-                </div>
-                <div class="mt-4 text-1xl font-bold text-gray-500">Coffetime App</div>
-                <div class="mt-2 flex flex-wrap gap-2.5">
-                    <div class="px-2 py-1 text-xs" style="color: white; background-color: #040b75;">PHP</div>
-                    <div class="px-2 py-1 text-xs" style="color: white; background-color: #2f18fa;">Jquery</div>
-                </div>
-                <div class="text-1xl font-semibold text-gray-500 mt-2">
-                    application for buying and selling coffee products on coffeetime
-                </div>
-            </div>
-            <div>
-                <div class="aspect-video w-full rounded-lg border border-neutral-700 p-1.5">
-                    <img src="img/simonitoring.png" alt="" srcset="">
-                </div>
-                <div class="mt-4 text-1xl font-bold text-gray-500">Simonitoring App</div>
-                <div class="mt-2 flex flex-wrap gap-2.5">
-                    <div class="px-2 py-1 text-xs" style="color: white; background-color: #f13b2f;">Laravel</div>
-                    <div class="px-2 py-1 text-xs" style="color: white; background-color: #2f18fa;">Jquery</div>
-                    <div class="px-2 py-1 text-xs" style="color: white; background-color: #040541;">Internet of
-                        Things</div>
-                </div>
-                <div class="text-1xl font-semibold text-gray-500 mt-2">
-                    application to monitor and feed fish in fish ponds automatically
-                </div>
-            </div>
-            <div class="mt-28"></div>
-        </div>
-    </div>
-</section> -->
-<!-- Personal Project end-->
-
-<!-- Footer start -->
-<section class="pt-35 mt-40">
-    <div class="text-center dark-text-zinc-500 border-t border-zinc-800 w-full md:py-8 py-4 md:mt-10 mt-5">Copy write ©
-        2024</div>
-
-</section>
-<!-- Footer end -->
-
+        <script>
+            feather.replace();
+        </script>
 </body>
 
 </html>
