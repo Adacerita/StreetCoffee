@@ -11,12 +11,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body x-data="produk">
     <!-- Navbar start -->
-    <nav class="navbar" x-data>
+
+    <!-- <nav class="navbar" x-data>
         <a href="#" class="navbar-logo">Ada <span>Cerita</span>.</a>
         <div class="navbar-nav">
             <a href="#home">Home</a>
@@ -26,7 +30,6 @@
         </div>
         <div class="navbar-extra active">
             <a href="#" id="search-button"><i data-feather="search"></i></a>
-            <!-- Form Pencarian -->
             <div class="search-form" x-data>
                 <input type="search" id="search-box" placeholder="Cari kopi favoritmu..." x-model="$store.products.searchQuery">
                 <label for="search-box"><i data-feather="search"></i></label>
@@ -38,14 +41,11 @@
             <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
         </div>
 
-        <!-- Search start -->
         <div class="search-form">
-            <input type="search" id="search-box" placeholder="search here...">
+            <input type="search" id="search-box" placeholder="Cari kopi favoritmu..." x-model="searchKeyword" autocomplete="off">
             <label for="search-box"><i data-feather="search"></i></label>
         </div>
-        <!-- Search end -->
 
-        <!-- Shopping card start -->
         <div class="shopping-cart" x-data="produk">
             <template x-for="(item, index) in $store.cart.items" x-keys="index">
                 <div class="cart-item">
@@ -74,23 +74,108 @@
                     </label>
                     <label for="email">
                         <span>Email</span>
-                        <input type="email" name="email" id="email">
+                        <input type="email" name="email" id="email" href="mailto:nama@email.com"/>
                     </label>
                     <label for="phone">
                         <span>Phone</span>
-                        <input type="number" name="phone" id="phone" autocomplete="off">
+                        <input type="number" name="phone" id="phone" href="tel:+628123456789" autocomplete="off">
                     </label>
 
                     <button class="checkout-button" type="button" id="checkout-button" value="Checkout">Checkout
                     </button>
-                    <!-- <button class="checkout-button2" type="button" id="checkout-button2" value="Cencel">Cancel
-                    </button> -->
                 </form>
             </div>
         </div>
-        <!-- Shopping card end -->
-    </nav>
+    </nav> -->
     <!-- Navbar end -->
+
+    <nav class="navbar" x-data>
+    <a href="#" class="navbar-logo">Ada <span>Cerita</span>.</a>
+    
+    <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#produk">Menu</a>
+        <a href="#kontak">Kontak</a>
+    </div>
+
+    <!-- Tombol-tombol Extra -->
+    <div class="navbar-extra">
+        <a href="#" id="search-button"><i data-feather="search"></i></a>
+        
+        <a href="#" id="shopping-cart-button">
+            <i data-feather="shopping-cart"></i>
+            <span class="quantity-badge" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span>
+        </a>
+        
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+    </div>
+
+    <!-- Search Form (Cukup SATU saja di sini) -->
+    <div class="search-form" x-data="{
+    execSearch() {
+        const keyword = document.getElementById('search-box').value;
+        $dispatch('search-minuman', keyword);
+        document.getElementById('produk').scrollIntoView({ behavior: 'smooth' });
+    }}">
+    <input 
+        type="search" 
+        id="search-box" 
+        placeholder="Cari kopi favoritmu..." 
+        autocomplete="off" 
+        @keyup.enter="execSearch()"
+    >
+    
+    <label for="search-box" @click="execSearch()">
+        <i data-feather="search"></i>
+    </label>
+</div>
+
+    <!-- Shopping cart start -->
+    <div class="shopping-cart" x-data="produk">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+            <div class="cart-item">
+                <img :src="`img/produk/${item.img}`" :alt="item.name">
+                <div class="item-detail">
+                    <h3 x-text="item.name"></h3>
+                    <div class="item-price">
+                        <span x-text="rupiah(item.price)"></span> &times;
+                        <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+                        <span x-text="item.quantity"></span>
+                        <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+                        <span x-text="rupiah(item.total)"></span>
+                    </div>
+                </div>
+            </div>
+        </template>
+        
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem;">Cart is Empty</h4>
+        <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+
+        <div class="form-container" x-show="$store.cart.items.length">
+            <form action="" id="checkoutFrom">
+                <h5>Customer detail</h5>
+                <label for="name">
+                    <span>Name</span>
+                    <input type="text" name="name" id="name">
+                </label>
+                <label for="email">
+                    <span>Email</span>
+                    <input type="email" name="email" id="email">
+                </label>
+                <label for="phone">
+                    <span>Phone</span>
+                    <input type="number" name="phone" id="phone" autocomplete="off">
+                </label>
+                <button class="checkout-button" type="button" id="checkout-button" value="Checkout">Checkout</button>
+            </form>
+        </div>
+    </div>
+    <!-- Shopping cart end -->
+</nav>
+
+
+
     <!-- Hero section start -->
     <!-- <section class="hero" id="home">
         <main class="content">
@@ -125,18 +210,17 @@
             <div class="content">
                 <h1>Nikmati Kopi <span>Ada Cerita</span></h1>
                 <p>Setiap cangkir memiliki cerita uniknya sendiri.</p>
-                <a href="#menu" class="cta">Beli Sekarang</a>
+                <a href="#produk" class="cta">Beli Sekarang</a>
             </div>
         </div>
     </template>
 </section>
     <!-- Hero section end -->
-
     <!-- About Start -->
     <section id="about" class="about">
         <h2><span>Tentang</span> Kami </h2>
 
-        <div class="row">
+        <div class="row" x-data="{ expanded: false}">
             <div class="about-img">
                 <img src="img/menu/profile02.jpeg" alt="Tentang Kami">
             </div>
@@ -146,44 +230,180 @@
                     Kami adalah sebuah kedai kopi yang didedikasikan untuk menghadirkan kualitas terbaik dalam
                     setiap cangkir kopi yang kami sajikan. Ada Cerita bukan sekadar tempat biasa untuk menikmati
                     kopi, tetapi juga merupakan tempat untuk bersantai, berkoneksi, dan mengejar kebahagiaan melalui
-                    cita rasa kopi yang memikat.</p><br>
-                <p>Kami mengerti kesibukan dalam kehidupan sehari-hari, dan kami ingin memudahkan Anda. Sekarang, Anda
+                    cita rasa kopi yang memikat.</p>
+                    <br>
+                <div class="more-text" :class="{ 'show': expanded}">
+                    <p>Kami mengerti kesibukan dalam kehidupan sehari-hari, dan kami ingin memudahkan Anda. Sekarang, Anda
                     dapat memesan kopi favorit Anda secara online melalui situs web kami. Kami akan dengan senang hati
-                    menyediakan kopi kesukaan Anda untuk diambil atau diantarkan sesuai keinginan Anda. Tidak perlu
-                    antri lagi, nikmati kopi berkualitas di mana pun Anda berada.</p>
+                    menyediakan kopi kesukaan Anda untuk diambil atau diantarkan sesuai keinginan Anda.</p>
+                </div>
+                <button class="read-more-btn" @click="expanded = !expanded" x-text="expanded ? 'Sembunyikan' : 'Selengkapnya...'"></button>
             </div>
         </div>
     </section>
     <!-- About end -->
 
     <!-- Product Start -->
-    <section class="produk" id="produk" x-data="produk" x-init="kategori = 'coffee'">
-        <h2><span>Menu </span> Kami </h2>
-            <p> Di Coffee time, kami menawarkan beragam pilihan kopi, dari yang ringan dan fruity hingga yang bold dan kuat.
-            Kami juga memiliki berbagai pilihan teh, cokelat panas, dan makanan penutup lezat yang cocok untuk menemani
-            minuman Anda</p>
-            <br>
-        <div class="menu-center">
-            <a class="btn btn-outline filter-btn" 
-            :class="kategori === 'coffee' ? 'btn-active' : 'btn-secondary'"
-            @click.prevent="kategori='coffee'">Milk Coffee</a>
+    <section 
+    class="produk" 
+    id="produk" 
+    x-data="produk" 
+    x-init="kategori = 'bestseller'" 
+    
+    @select-category.window="
+        kategori = $event.detail.kategori;
+        document.getElementById('kategori-selected-name').textContent = $event.detail.nama;
+    "
+    
+    @search-minuman.window="
+        searchKeyword = $event.detail
+    "
+>
+    <h2><span>Menu </span> Kami</h2>
+    <p>Di Coffee time, kami menawarkan beragam pilihan kopi, dari yang ringan dan fruity hingga yang bold dan kuat.
+       Kami juga memiliki berbagai pilihan teh, cokelat panas, dan makanan penutup lezat yang cocok untuk menemani minuman Anda.</p>
+    <br>
+    
+    <div 
+    class="menu-filter-container"
+    x-data="{ dropdownOpen: false }"
+>
 
-            <a class="btn btn-outline filter-btn" 
-            :class="kategori === 'noncoffee' ? 'btn-active' : 'btn-primary'"
-            @click.prevent="kategori='noncoffee'">Non Coffee</a>
+    <button
+        type="button"
+        class="btn-filter-main"
+        @click="dropdownOpen = !dropdownOpen"
+    >
+        <span id="kategori-selected-name">
+            Best Seller Series
+        </span>
 
-            <a class="btn btn-outline filter-btn" 
-            :class="kategori === 'mocktail' ? 'btn-active' : 'btn-secondary'"
-            @click.prevent="kategori='mocktail'">Mocktail</a>
-            
-            <a class="btn btn-outline filter-btn" 
-            :class="kategori === 'milk' ? 'btn-active' : 'btn-secondary'"
-            @click.prevent="kategori='milk'">Milk Series</a>
+        <svg
+            width="30"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+        >
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </button>
 
-            <a class="btn btn-outline filter-btn" 
-            :class="kategori === 'lunch' ? 'btn-active' : 'btn-primary'"
-            @click.prevent="kategori='lunch'">Lunch</a>
-        </div>
+    <div
+        class="filter-dropdown-list"
+        x-show="dropdownOpen"
+        x-cloak
+        @click.outside="dropdownOpen = false"
+    >
+        <button
+            type="button"
+            class="custom-oval-btn"
+            @click="
+                dropdownOpen = false;
+                $dispatch('select-category', {
+                    kategori: 'bestseller',
+                    nama: 'Best Seller'
+                });
+            "
+        >
+            Best Seller Series
+        </button>
+
+        <button
+            type="button"
+            class="custom-oval-btn"
+            @click="
+                dropdownOpen = false;
+                $dispatch('select-category', {
+                    kategori: 'all',
+                    nama: 'Semua Menu'
+                });
+            "
+        >
+            Semua Menu
+        </button>
+
+        <button
+            type="button"
+            class="custom-oval-btn"
+            @click="
+                dropdownOpen = false;
+                $dispatch('select-category', {
+                    kategori: 'americano',
+                    nama: 'Americano Series'
+                });
+            "
+        >
+            Americano Series
+        </button>
+
+        <button
+            type="button"
+            class="custom-oval-btn"
+            @click="
+                dropdownOpen = false;
+                $dispatch('select-category', {
+                    kategori: 'coffee',
+                    nama: 'Milk Coffee'
+                });
+            "
+        >
+            Milk Coffee Series
+        </button>
+
+        <button
+            type="button"
+            class="custom-oval-btn"
+            @click="
+                dropdownOpen = false;
+                $dispatch('select-category', {
+                    kategori: 'noncoffee',
+                    nama: 'Non Coffee'
+                });
+            "
+        >
+            Non Coffee Series
+        </button>
+
+        <button
+    type="button"
+    class="custom-oval-btn"
+    @click="
+        dropdownOpen = false;
+        $dispatch('select-category', {
+            kategori: 'mocktail',
+            nama: 'Mocktail'
+        });
+    "
+>
+    Mocktail Series
+</button>
+
+        <button
+            type="button"
+            class="custom-oval-btn"
+            @click="
+                dropdownOpen = false;
+                $dispatch('select-category', {
+                    kategori: 'milk',
+                    nama: 'Milk Series'
+                });
+            "
+        >
+            Milk Series Series
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+    </div>
+</div>
+
+    
+</div>
         <div class="row">      
             <template x-for="(item, index) in filteredItems" :key="index">
                 <div class="produk-card">
@@ -205,31 +425,20 @@
                         </a> -->
                     </div>
                     <div class="produk-image">
-                        <img :src="`img/produk/${item.img}`" :alt="item.name">
+                        <img :src="`img/${item.img}`" :alt="item.name">
                     </div>
                     <div class="produk-content">
                         <h3 x-text="item.name"></h3>
                         <div class="produk-stars">
-                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                            <template x-for="star in rating(item)" :key="star">
+                                <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"stroke-linecap="round" 
+                                    stroke-linejoin="round"> <use href="img/feather-sprite.svg#star" />
+                                </svg>
+                            <!-- <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <use href="img/feather-sprite.svg#star" />
-                            </svg>
-                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <use href="img/feather-sprite.svg#star" />
-                            </svg>
-                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <use href="img/feather-sprite.svg#star" />
-                            </svg>
-                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <use href="img/feather-sprite.svg#star" />
-                            </svg>
-                            <svg width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <use href="img/feather-sprite.svg#star" />
-                            </svg>
+                            </svg> -->
+                            </template>
                         </div>
                         <div class="produk-price" x-text="rupiah(item.price)"></div>
                     </div>
@@ -243,10 +452,10 @@
                         <i data-feather="x"></i>
                     </a>
                     <template x-if="itemDetail">
-                        <div class="modal-content">
-                            <img :src="`img/produk/${itemDetail.img}`" :alt="itemDetail.name">
+                        <div class="modal-content" :key="itemDetail.id">
+                            <img :src="`img/${itemDetail.img}`" :alt="itemDetail.name">
                             <div class="produk-content">
-                                <h3 x-text="itemDetail.name"></h3>
+                                <h4 x-text="itemDetail.name"></h4>
                                 <p x-text="itemDetail.deskripsi"></p>
                                 
                                 <a href="#" @click.prevent="$store.cart.add(itemDetail)" class="buy-btn" center>
@@ -260,7 +469,7 @@
                         </div>
                     </template>
             </div>
-        </div>
+        </div> 
         <br>
         <br>
         <br>
@@ -276,10 +485,95 @@
                     <div class="video-box">
                         <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@ohenparfume/video/7568105094621777173?_r=1&_t=ZS-95pNZKkUGnv" data-video-id="7568105094621777173"><a target="_blank" title="@ohenparfume" href="https://www.tiktok.com/@ohenparfume/video/7568105094621777173?_r=1&_t=ZS-95pNZKkUGnv">@ohenparfume</a></blockquote>
                     </div>
-        </div>
-
+            </div>
         </div>
     </section>
+    <style>
+
+/* Alpine.js */
+[x-cloak] {
+    display: none !important;
+}
+
+
+/* CONTAINER MENU FILTER */
+.menu-filter-container {
+    position: relative;
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* TOMBOL UTAMA */
+.btn-filter-main {
+    width: 166px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    background: #000;
+    color: #c58b3a;
+
+    border: 1px solid #c58b3a;
+    border-radius: 30px;
+
+    cursor: pointer;
+}
+
+
+/* DROPDOWN */
+.filter-dropdown-list {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 190px;
+
+    padding: 12px;
+
+    background: #000;
+
+    border: 1px solid #222;
+    border-radius: 20px;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+
+    z-index: 9999;
+}
+
+
+/* PILIHAN */
+.custom-oval-btn {
+    width: 100%;
+    height: 31px;
+
+    margin-bottom: 8px;
+
+    background: #000;
+    color: #c58b3a;
+
+    border: 1px solid #c58b3a;
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.custom-oval-btn:last-child {
+    margin-bottom: 0;
+}
+
+</style>
     <!-- Product End -->
 
     <!-- Kontak Start -->
@@ -290,9 +584,7 @@
             segera!</P>
 
         <div class="row">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.781342755085!2d109.96948937399584!3d-1.8309339364618924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e05191f60a56859%3A0x76a74504e1d207d9!2sKedai%20Lalu%20Limpat!5e0!3m2!1sen!2sid!4v1699357463898!5m2!1sen!2sid"
-                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.7504216032153!2d109.97792129999999!3d-1.8447795000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e051843c1d4df3d%3A0x826eb65eedbe025c!2sKANTOR%20DINAS%20PERTANIAN%20PETERNAKAN%20DAN%20PERKEBUNAN%20KABUPATEN%20KETAPANG!5e0!3m2!1sen!2sid!4v1787431177763!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             <form action="">
                 <div class="input-group">
                     <i data-feather="user"></i>
@@ -312,7 +604,6 @@
     </section>
 
     <!-- Kontak End -->
-
     <!-- Footer Start -->
     <footer>
         <div class="socials">
@@ -335,7 +626,7 @@
     <!-- Footer End -->
 
     <!-- Modal detail start -->
-    <div class="modal" id="item-detail-modal" x-show="itemDetail !== null" x-data="produk" style="display: none;">
+    <!-- <div class="modal" id="item-detail-modal" x-show="itemDetail !== null" x-data="produk" style="display: none;">
         <div class="modal-container">
             <a href="#" class="close-icon" @click.prevent="itemDetail = null; document.getElementById('item-detail-modal').style.display='none'">
                 <i data-feather="x"></i>
@@ -343,14 +634,16 @@
 
             <template x-if="itemDetail">
                 <div class="modal-content">
-                    ... (isi konten Anda)
+                    (isi konten Anda)
                 </div>
             </template>
         </div>
-    </div>
+    </div> -->
 
         <!-- Javascript-->
         <script src="js/script.js"></script>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         <!-- Baru app.js -->
         <script src="src/app.js"></script>
@@ -359,10 +652,52 @@
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script async src="https://www.tiktok.com/embed.js"></script>
         
-
         <script>
             feather.replace();
         </script>
+
+        <script>
+    // Menangkap semua elemen yang dibutuhkan berdasarkan ID
+    const dropdownBtn = document.getElementById('kategori-btn');
+    const dropdownList = document.getElementById('kategori-list');
+    const dropdownIcon = document.getElementById('kategori-icon');
+    const selectedName = document.getElementById('kategori-selected-name');
+    const dropdownContainer = document.getElementById('kategori-dropdown-container');
+
+    // Fungsi 1: Mengatur Buka/Tutup saat Tombol Utama diklik
+    dropdownBtn.addEventListener('click', function(event) {
+        event.stopPropagation(); // Mencegah klik bocor
+        
+        // Jika sedang tertutup, maka buka
+        if (dropdownList.style.display === 'none' || dropdownList.style.display === '') {
+            dropdownList.style.display = 'flex'; // Pakai flex agar urutan menu tetap rapi
+            dropdownIcon.classList.add('rotate');
+        } else {
+            // Jika sedang terbuka, maka tutup
+            dropdownList.style.display = 'none';
+            dropdownIcon.classList.remove('rotate');
+        }
+    });
+
+    // Fungsi 2: Dipanggil saat salah satu opsi di dalam list diklik
+    function pilihKategori(namaMenu) {
+        // Ubah teks di tombol utama
+        selectedName.innerText = namaMenu;
+        
+        // Paksa tutup list dropdown-nya
+        dropdownList.style.display = 'none';
+        dropdownIcon.classList.remove('rotate');
+    }
+
+    // Fungsi 3: Otomatis tutup jika user klik area kosong di luar dropdown
+    document.addEventListener('click', function(event) {
+        // Cek apakah area yang diklik BUKAN bagian dari container dropdown
+        if (!dropdownContainer.contains(event.target)) {
+            dropdownList.style.display = 'none';
+            dropdownIcon.classList.remove('rotate');
+        }
+    });
+</script>
 </body>
 
 </html>
