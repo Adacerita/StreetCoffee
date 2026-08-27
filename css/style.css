@@ -287,6 +287,214 @@ body {
     cursor: pointer;
 }
 
+.checkout-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    backdrop-filter: blur(4px);
+}
+
+.checkout-modal-content {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 35px 30px;
+
+    /* Background khusus kotak pesan */
+    background: linear-gradient(
+        145deg,
+        #f3e2cc,
+        #e8c9a5
+    );
+
+    border-radius: 24px;
+
+    text-align: center;
+
+    border: 1px solid rgba(110, 70, 40, 0.2);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35);
+
+    overflow: hidden;
+
+    animation: checkoutModalShow 0.3s ease;
+}
+
+.checkout-modal-icon {
+    position: relative;
+    z-index: 1;
+
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #6b4226;
+
+    color: #f8dfbd;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 20px rgba(75, 45, 25, 0.25);
+}
+
+.checkout-modal-content strong {
+    color: #4a2c1b;
+
+    font-weight: 700;
+}
+
+.checkout-modal-content p {
+    position: relative;
+    z-index: 1;
+
+    margin: 8px 0;
+
+    color: #694832;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+.checkout-modal-content h2 {
+    position: relative;
+    z-index: 1;
+
+    margin: 0 0 15px;
+
+    font-size: 23px;
+
+    font-weight: 700;
+
+    color: #4a2c1b;
+}
+
+.checkout-modal-icon span {
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.checkout-modal-content::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    top: -80px;
+    right: -50px;
+
+    background: rgba(255, 255, 255, 0.25);
+
+    border-radius: 50%;
+}
+
+.checkout-modal-content h2 {
+    margin: 0 0 15px;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #333333;
+}
+
+.checkout-modal-content p {
+    margin: 8px 0;
+
+    color: #666666;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+.checkout-modal-content strong {
+    color: #333333;
+}
+
+.checkout-modal-button {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+
+    margin-top: 22px;
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #6b4226;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.checkout-modal-button:hover {
+    background: #4f2f1c;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(75, 45, 25, 0.25);
+}
+
+@keyframes checkoutModalShow {
+
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+}
+
+
+
+
 
 /* Hero */
 
@@ -327,7 +535,7 @@ body {
     max-width: 60rem;
 } */
 
-/* .hero {
+/* .hero {s
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -348,7 +556,11 @@ body {
     max-width: 60rem;
     position: relative;
     z-index: 3;
-    text-align: left;       /* KUNCI: Kembali ke kiri */
+    text-align: left;  
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;     /* KUNCI: Kembali ke kiri */
 }
 
 .hero .content h1 {
@@ -356,6 +568,7 @@ body {
     color: #fff;
     text-shadow: 1px 1px 3px rgba(1, 1, 3, 0.8);
     line-height: 1.1;
+    text-align: left;
 }
 
 .hero .content h1 span {
@@ -369,6 +582,12 @@ body {
     line-height: 1.4;
     font-weight: 50;
     text-shadow: 1px 1px 3px rgba(1,1,3, 6);
+    text-align: left;
+}
+
+.hero .content a, .hero .content button { 
+    position: relative; 
+    z-index: 3; 
 }
 
 .hero .content .cta {
@@ -389,7 +608,12 @@ body {
     width: 100%;
     height: 30%;
     bottom: 0;
-    background: linear-gradient(0deg, rgba(1,1,3,1) 8%, rgba(255, 255, 255, 0) 50%);
+    background: linear-gradient(0deg, rgba(1,1,3,1) 3%, rgba(255, 255, 255, 0) 20%);
+}
+
+
+.input-group textarea::placeholder {
+    color: #999;
 }
 
 /* About Section */
@@ -525,6 +749,7 @@ body {
 }
 
 .produk .produk-content h3 {
+    color: #ffffff;
     font-size: 2rem;
 }
 
@@ -532,6 +757,7 @@ body {
     text-align: justify;
     line-height: 1.6; /* Opsional: agar teks lebih enak dibaca */
     margin-bottom: 10px;
+    color: rgba(60, 60, 60, 0.95); 
 }
 
 .produk .produk-stars {
@@ -557,10 +783,11 @@ body {
     background-color: #222;
 }
 
-.kontak .row .map {
+.kontak .row iframe {
     flex: 1 1 45rem;
     width: 100%;
-    object-fit: cover;
+    min-height: 450px;
+    border: 0;
 }
 
 .kontak .row form {
@@ -571,18 +798,82 @@ body {
 
 .kontak .row form .input-group {
     display: flex;
+
     align-items: center;
+
+    width: 100%;
+
     margin-top: 2rem;
+
     background-color: var(--bg);
+
     border: 1px solid #eee;
+
     padding-left: 2rem;
+
+    box-sizing: border-box;
 }
 
 .kontak .row form .input-group input {
     width: 100%;
+
     padding: 2rem;
+
     font-size: 1.7rem;
-    background: none;
+
+    background: transparent;
+
+    color: #fff;
+
+    border: none;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    font-family: 'Poppins', sans-serif;
+}
+
+.kontak .row form .input-group textarea {
+    width: 100%;
+
+    min-height: 150px;
+
+    padding: 2rem;
+
+    font-size: 1.7rem;
+
+    font-family: 'Poppins', sans-serif;
+
+    line-height: 1.5;
+
+    background: transparent;
+
+    color: #fff;
+
+    border: none;
+
+    outline: none;
+    box-sizing: border-box;
+
+    resize: vertical;
+}
+
+.kontak .row form .input-group input::placeholder,
+.kontak .row form .input-group textarea::placeholder {
+    color: #aaa;
+
+    opacity: 1;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.kontak .row form .input-group i {
+    flex-shrink: 0;
+
     color: #fff;
 }
 
@@ -635,70 +926,181 @@ footer .credit a {
     font-weight: 700;
 }
 
+
 /* Modal Box */
-.modal {
-    display: none;
-    z-index: 9999;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.6);
-    overflow: auto;
-    text-align: justify;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
+.modal,
+#item-detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75); /* Lapisan gelap di belakang modal */
+  z-index: 99999; /* Memastikan modal selalu melayang paling atas */
+  
+  /* Flexbox untuk menempatkan container tepat di tengah layar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* Menyembunyikan elemen Alpine x-cloak sebelum loaded */
+[x-cloak] {
+  display: none !important;
+}
+
+/* 2. Kotak / Card Modal Utama */
 .modal-container {
-    width: 80%;
-    border: 1px solid #666;
-    padding: 1.5rem;
-    margin: 14% auto;
-    color: var(--bg);
-    background-color: #eeeeee;
-    position: relative;
-    animation: animateModal 1.8s;
+  position: relative;
+  background-color: #fcdcdc; /* Latar kartu putih */
+  color: #333333; /* Warna teks gelap */
+  width: 100%;
+  max-width: 450px; /* MEMBATASI LEBAR: Mencegah modal memenuhi layar */
+  border-radius: 16px;
+  padding: 30px 24px 24px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  margin: auto;
 }
 
 .modal-container .close-icon {
-    right: 1rem;
-    position: absolute;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #333333;
+  text-decoration: none;
+  font-size: 1.3rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+  z-index: 10;
 }
 
-.modal-content {
-    flex-wrap: nowrap;
-    display: flex;
-    font-size: larger;
-    text-align: justify;
+.modal-container .close-icon:hover {
+  color: #e74c3c;
+  background-color: #f0f0f0;
 }
 
 .modal-content img {
-    margin-bottom: 2rem;
-    margin-right: 2rem;
-    height: 18rem;
+  width: 100%;
+  max-width: 220px;       /* Batas ukuran foto minuman */
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .modal-content p {
     margin-top: 1.2rem;
     line-height: 1.8rem;
-    text-decoration: #000000;
+    color: rgba(255, 255, 255, 0.95);
+    /* text-decoration: #000000; */
     font-size: large;
     font-style: var(--bg);
 }
 
-/* .modal-content p {
-    font-size: 4rem;
-    color: #3b34342a; */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Rata tengah semua elemen horizontal */
+  text-align: center;  /* Teks otomatis rata tengah */
+  gap: 16px;
+  width: 100%;
+}
+
+/* 5. Foto Minuman */
+.modal-content img {
+  width: 100%;
+  max-width: 200px; /* Lebar maksimal foto */
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 6. Informasi Produk & Deskripsi */
+.produk-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Memaksa isi teks & tombol ke posisi tengah */
+}
+
+.produk-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.produk-content h4 {
+        color: #000000 !important; /* Memaksa warna menjadi hitam pekat */
+        font-size: 2rem;         /* Ukuran font yang pas */
+        font-weight: 700;           /* Membuat teks tebal (bold) */
+        margin-top: 6px;            /* Jarak antara foto dan judul */
+        margin-bottom: 4px;         /* Jarak antara judul dan teks deskripsi */
+        text-align: center;
+    }
+
+.produk-content p {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  color: #ffffff;
+  line-height: 1.6;
+  max-width: 380px; /* Pembatas lebar paragraf agar rapi */
+}
+
+.buy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #b6895b; /* Warna aksen tema kopi */
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.25s, transform 0.2s;
+}
+
+.buy-btn:hover {
+  background-color: #8c643e;
+  transform: translateY(-2px);
+}
+
+.buy-btn svg {
+  stroke: #ffffff;
+  width: 20px;
+  height: 20px;
+}
+
+.produk-price {
+  color: #ffffff;
+  font-weight: bold;
+}
 
 
 .modal-content a {
     padding: 1rem 1.6rem;
     margin-top: 1rem;
-    color: #3b34342a;
+    color: #fffdfd2a;
     background-color: var(--primary);
     width: 12rem;
     gap: 1rem;
     display: flex;
+}
+
+.read-more-btn {
+  display: none;
 }
 
 .menu-center {
@@ -746,7 +1148,7 @@ footer .credit a {
 }
 
 /* MOBILE */
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
     .menu-center {
         flex-direction: column;
     }
@@ -755,6 +1157,140 @@ footer .credit a {
         width: 100%;
         text-align: center;
     }
+} */
+/* =========================================================
+   STYLING RESPONSIF KHUSUS TAMPILAN MOBILE / ANDROID
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+    .menu-filter-container { 
+        position: relative; 
+        width: 100%; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+    } 
+    /* Tombol utama */ 
+    .btn-filter-main { 
+        width: 300px; 
+        min-width: 300px; 
+        box-sizing: border-box; 
+        margin: 0; 
+    } 
+    /* Kotak dropdown */ 
+    .filter-dropdown-list { 
+        width: 300px; 
+        min-width: 300px; 
+        box-sizing: border-box; 
+        margin: 0; 
+        left: 50%; 
+        transform: translateX(-50%); 
+    } 
+    /* Tombol pilihan */ 
+    .custom-oval-btn { 
+        width: 100%; 
+        min-width: 0; 
+        box-sizing: border-box; 
+        margin: 0; 
+    }
+  /* 1. Pembungkus Luar Modal */
+  .modal,
+  #item-detail-modal {
+    padding: 12px; /* Memperkecil jarak tepi ke layar HP */
+    align-items: center;
+  }
+
+  /* 2. Kartu Modal */
+  .modal-container {
+    width: 90%;
+    max-width: 340px; /* Ukuran lebar proporsional untuk HP */
+    max-height: 88vh; /* Batasi tinggi maksimal agar tidak keluar dari layar HP */
+    overflow-y: auto;  /* Tambahkan scroll otomatis jika layar HP sangat pendek */
+    padding: 16px 14px 14px; /* Perkecil padding dalam */
+    border-radius: 16px;
+  }
+
+  /* 3. Tombol Close (x) */
+  .modal-container .close-icon {
+    top: 10px;
+    right: 10px;
+    font-size: 1.1rem;
+    width: 28px;
+    height: 28px;
+  }
+
+  /* 4. Konten Modal & Gap */
+  .modal-content {
+    gap: 6px; /* Perkecil jarak antar elemen (gambar, teks, tombol) */
+  }
+
+  /* 5. Foto Minuman */
+  .modal-content img {
+    max-width: 110px; /* Perkecil ukuran gambar agar tidak dominan */
+    border-radius: 10px;
+    height: auto;
+    margin-bottom: 2px;
+  }
+
+  /* 6. Judul Produk */
+  .produk-content h3 {
+    font-size: 1.1rem;        /* Ukuran judul disesuaikan untuk layar HP */
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: #000000;
+  }
+
+  .produk-content h4 {
+        color: #000000 !important; /* Memaksa warna menjadi hitam pekat */
+        font-size: 2rem;         /* Ukuran font yang pas */
+        font-weight: 700;           /* Membuat teks tebal (bold) */
+        margin-top: 4px;            /* Jarak antara foto dan judul */
+        margin-bottom: 2px;         /* Jarak antara judul dan teks deskripsi */
+        text-align: center;
+    }
+
+  /* 7. Deskripsi Teks */
+  /* .produk-content p {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: #000000;
+  } */
+
+  .produk-content p {
+  /* 1. Mengubah perataan teks menjadi Rata Tengah (mencegah spasi renggang) */
+  text-align: center !important;
+
+  /* 2. Mengembalikan jarak antarkata dan antarhuruf ke ukuran normal */
+  word-spacing: normal !important;
+  letter-spacing: normal !important;
+
+  /* 3. Mengatur ketebalan & warna teks agar lebih jelas dibaca */
+  color: #333333 !important; /* Warna abu gelap yang tegas */
+  font-weight: 400 !important; /* Ketebalan standar (tidak terlalu tipis) */
+  
+  /* 4. Mengatur jarak antarbaris agar tidak menumpuk */
+  line-height: 1.5 !important;
+  font-size: 1rem !important;
+
+  /* 5. Jarak ke tombol di bawahnya */
+  margin-top: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+  /* 8. Tombol Beli & Harga */
+  .buy-btn {
+    padding: 8px 18px; /* Perkecil ukuran tombol */
+    font-size: 0.88rem;
+    gap: 6px;
+  }
+
+  .buy-btn svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* Modal Animation */
@@ -776,11 +1312,125 @@ footer .credit a {
         font-size: 75%;
     }
 
+    .more-text {
+    display: none;
+    }
+    
+    .more-text.show {
+    display: block;
+    }
+
+    .read-more-btn {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: #b6895b; /* Warna tema aksen kopi */
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 5px 0;
+    margin-top: 5px;
+    text-decoration: underline;
+    }
+
+    .read-more-btn:hover {
+    color: #ffffff;
+    }
+
 }
+/*leptop*/
+@media (min-width: 1025px) {
+    .menu-filter-container { 
+        position: relative; 
+        width: 100%; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+    } 
+    /* Tombol utama */ 
+    .btn-filter-main { 
+        width: 380px; 
+        min-width: 380px; 
+        box-sizing: border-box; 
+        margin: 0; 
+    } 
+    /* Kotak dropdown */ 
+    .filter-dropdown-list { 
+        width: 380px; 
+        min-width: 380px; 
+        box-sizing: border-box; 
+        margin: 0; left: 50%; 
+        transform: translateX(-50%); 
+    } 
+    /* Tombol pilihan */ 
+    .custom-oval-btn { 
+        width: 100%; 
+        min-width: 0; 
+        box-sizing: border-box; 
+        margin: 0; 
+    }
+}
+
 /* Tablet */
-@media (max-width: 768px) {
+@media (max-width: 768px) and (max-width: 1024px) {
     html {
         font-size: 62.5%;
+    }
+
+    .menu-filter-container { 
+        position: relative; 
+        width: 100%; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+    } 
+    /* Tombol utama */ 
+    .btn-filter-main { 
+        width: 300px; 
+        min-width: 300px; 
+        box-sizing: border-box; 
+        margin: 0; 
+    } 
+    /* Kotak dropdown */ 
+    .filter-dropdown-list { 
+        width: 300px; 
+        min-width: 300px; 
+        box-sizing: border-box; 
+        margin: 0; 
+        left: 50%; 
+        transform: translateX(-50%); 
+    } 
+    /* Tombol pilihan */ 
+    .custom-oval-btn { 
+        width: 100%; 
+        min-width: 0; 
+        box-sizing: border-box; 
+        margin: 0; 
+    }
+
+    .more-text {
+    display: none;
+    }
+    
+    .more-text.show {
+    display: block;
+    }
+
+    .read-more-btn {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: #b6895b; /* Warna tema aksen kopi */
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 5px 0;
+    margin-top: 5px;
+    text-decoration: underline;
+    }
+
+    .read-more-btn:hover {
+    color: #ffffff;
     }
 
     #hamburger-menu{
@@ -788,7 +1438,7 @@ footer .credit a {
     }
 
     .hero-slide {
-        justify-content: center; /* Di HP jadi ke tengah */
+        justify-content: flex-start; /* Di HP jadi ke tengah */
     }
     
     .hero .content {
@@ -888,30 +1538,75 @@ footer .credit a {
         width: 100% !important;
     }
 
+    /* .produk-content p {
+    color: rgba(255, 255, 255, 0.95); 
+    line-height: 1.6; /* Menambah jarak antar baris teks agar lebih lega */
+    } */
+
+    .produk-content h3 {
+        color: #ffffff !important; /* Memaksa warna menjadi hitam pekat */
+        font-size: 1.25rem;         /* Ukuran font yang pas */
+        font-weight: 700;           /* Membuat teks tebal (bold) */
+        margin-top: 6px;            /* Jarak antara foto dan judul */
+        margin-bottom: 6px;         /* Jarak antara judul dan teks deskripsi */
+        text-align: center;
+    }
+
+    .produk-content h4 {
+        color: #000000 !important; /* Memaksa warna menjadi hitam pekat */
+        font-size: 2rem;         /* Ukuran font yang pas */
+        font-weight: 700;           /* Membuat teks tebal (bold) */
+        margin-top: 4px;            /* Jarak antara foto dan judul */
+        margin-bottom: 2px;         /* Jarak antara judul dan teks deskripsi */
+        text-align: center;
+    }
+
     /* Gambar dipaksa tengah */
     .modal-content img {
         display: block !important;
         margin: 0 auto 2rem auto !important;
-        max-width: 70% !important;
+        max-width: 60% !important;
     }
 
     .product-content h3 {
     font-weight: 700;        /* Membuat judul sangat tebal */
     color: #000000;
-}
+    }
     .modal-content h3 {
         text-align: center !important;
         width: 100% !important;
         margin: 0 !important;
+        color: #000000;
     }
 
     /* Deskripsi tetap justify tapi lebarnya dikontrol */
 
-    .modal-content p {
+    /* .modal-content p {
         text-align: justify !important;
         margin: 1.5rem 0 !important;
-        font-size: 1rem;
-    }
+        font-size: 1.5rem;
+    } */
+
+    .produk-content p {
+  /* 1. Mengubah perataan teks menjadi Rata Tengah (mencegah spasi renggang) */
+  text-align: center !important;
+
+  /* 2. Mengembalikan jarak antarkata dan antarhuruf ke ukuran normal */
+  word-spacing: normal !important;
+  letter-spacing: normal !important;
+
+  /* 3. Mengatur ketebalan & warna teks agar lebih jelas dibaca */
+  color: #333333 !important; /* Warna abu gelap yang tegas */
+  font-weight: 400 !important; /* Ketebalan standar (tidak terlalu tipis) */
+  
+  /* 4. Mengatur jarak antarbaris agar tidak menumpuk */
+  line-height: 1.5 !important;
+  font-size: 1.2rem !important;
+
+  /* 5. Jarak ke tombol di bawahnya */
+  margin-top: 8px !important;
+  margin-bottom: 16px !important;
+}
 
     /* Tombol Harga dipaksa ke tengah */
     .modal-content a.buy-btn {
@@ -929,11 +1624,37 @@ footer .credit a {
     color: #000000;          
     margin: 10px 0;
 }
-}
+
 /* Mobile */
     @media (max-width: 450px) {
     html {
         font-size: 65%;
+    }
+
+    .checkout-modal {
+        padding: 15px;
+    }
+
+    .checkout-modal-content {
+        padding: 30px 22px;
+
+        border-radius: 20px;
+    }
+
+    .checkout-modal-content h2 {
+        font-size: 21px;
+    }
+
+    .checkout-modal-content p {
+        font-size: 14px;
+    }
+
+    .hero .content {
+        padding: 1.4rem 7%;
+        max-width: 60rem;
+        position: relative;
+        z-index: 3;
+        text-align: left;       /* KUNCI: Kembali ke kiri */
     }
 
     .modal-content {
@@ -960,17 +1681,59 @@ footer .credit a {
         max-width: 70% !important;
     }
 
+    .produk-content h3 {
+        color: #000000;
+    }
+
+    .produk-content h4 {
+        color: #000000 !important; /* Memaksa warna menjadi hitam pekat */
+        font-size: 2rem;         /* Ukuran font yang pas */
+        font-weight: 700;           /* Membuat teks tebal (bold) */
+        margin-top: 4px;            /* Jarak antara foto dan judul */
+        margin-bottom: 2px;         /* Jarak antara judul dan teks deskripsi */
+        text-align: center;
+    }
+    
     .modal-content h3 {
+        
         text-align: center !important;
         width: 100% !important;
         margin: 1rem 0 !important;
+        color: #000000;
     }
 
     .modal-content p {
         text-align: justify !important;
         width: 100% !important;
         margin: 1.5rem 0 !important;
+        margin-top: 1.2rem;
+        line-height: 1.8rem;
+        color: rgba(255, 255, 255, 0.95);
+    /* text-decoration: #000000; */
+        font-size: large;
+        font-style: var(--bg);
     }
+
+    .produk-content p {
+  /* 1. Mengubah perataan teks menjadi Rata Tengah (mencegah spasi renggang) */
+  text-align: center !important;
+
+  /* 2. Mengembalikan jarak antarkata dan antarhuruf ke ukuran normal */
+  word-spacing: normal !important;
+  letter-spacing: normal !important;
+
+  /* 3. Mengatur ketebalan & warna teks agar lebih jelas dibaca */
+  color: #333333 !important; /* Warna abu gelap yang tegas */
+  font-weight: 400 !important; /* Ketebalan standar (tidak terlalu tipis) */
+  
+  /* 4. Mengatur jarak antarbaris agar tidak menumpuk */
+  line-height: 1.5 !important;
+  font-size: 1rem !important;
+
+  /* 5. Jarak ke tombol di bawahnya */
+  margin-top: 8px !important;
+  margin-bottom: 16px !important;
+}
 
     /* Tombol Harga dipaksa ke tengah */
     .modal-content a.buy-btn {
